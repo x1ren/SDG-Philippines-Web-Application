@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navBar">
+        <div class="navSearch">
+            <div class="image">
+                <img src="{{ url_for('static', filename='images/sdgTitle.png') }}" alt="sdglogo" width="300px" height="50px">
+            </div>
+            <div class="form">
+                <form class="search" method="get">
+                    <input type="text" id="location" placeholder="Search">
+                    <button type="submit" id="searchButton" style="border: 0px; background-color: white;">
+                        <img src="{{ url_for('static', filename='images/search.png') }}" alt="search" id="searchImage" width="20px" height="20px">
+                    </button>
+                </form>
+            </div>
+        
+        </div>
+        <div class="newsBlog">
+            <button class="news">
+                <p>Sdg</p>
+            </button>
+            <button class="news">
+                <p>News</p>
+            </button>
+        </div>
+    </nav>
+
+    <div class="Main">
+        <div class="sdgRow">
+            {% for i in range(0,17) %}
+            <form action="{{url_for('show_sdg', sdg_number=i+1)}}" class="sdg">
+                <button type="submit" class="sdgButton">
+                    <img src="{{ url_for('static', filename='images/sdg' + (i+1)|string + ('.png' if (i+1) not in [2, 3, 6, 8] else '.jpg')) }}" alt="sdg{{ i+1 }}" class="sdgImages">
+
+                    <p class="sdgText">{{ i+1 }}. {{ sdg_titles[i] }}</p>
+                </button>
+            </form>
+            {% endfor %}
+           
+        </div>
+    </div>
+  
+</body>
+</html>
