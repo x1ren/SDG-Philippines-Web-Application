@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+    .form {
+        position: relative; 
+    }
+    #results {
+        position: absolute;     
+        top: 100%; 
+        left: 0;
+        width: 100%;
+        background-color: white;
+        border: 1px solid #ccc;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 200;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-top: 2px;
+    }
+    .result-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+    .result-item:hover {
+      background-color: #eee;
+    }
+    .news{
+        cursor: pointer;
+    }
+  </style>
 </head>
 <body>
     <nav class="navBar">
@@ -14,21 +43,21 @@
             </div>
             <div class="form">
                 <form class="search" method="get">
-                    <input type="text" id="location" placeholder="Search">
-                    <button type="submit" id="searchButton" style="border: 0px; background-color: white;">
-                        <img src="{{ url_for('static', filename='images/search.png') }}" alt="search" id="searchImage" width="20px" height="20px">
-                    </button>
+                    <input type="text" id="location" placeholder="Search..." autocomplete="off">
+                    <div id="results"></div>
                 </form>
             </div>
         
         </div>
-        <div class="newsBlog">
-            <button class="news">
-                <p>Sdg</p>
-            </button>
-            <button class="news">
-                <p>News</p>
-            </button>
+        <div class="newsBlog" style="justify-content: center; align-items: center; padding: 0;" >
+            
+             <form action="{{url_for('news_sdg')}}">
+                <button type="submit" class="news">
+                    News
+                </button>
+
+            </form>
+          
         </div>
     </nav>
 
@@ -46,6 +75,6 @@
            
         </div>
     </div>
-  
+  <script type="module" src="{{ url_for('static', filename='js/search.js') }}"></script>
 </body>
 </html>

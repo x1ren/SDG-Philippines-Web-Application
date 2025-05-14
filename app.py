@@ -1,9 +1,15 @@
 from flask import Flask, render_template, jsonify
 import json
+import requests
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 
-# SDG titles and paragraphs
+load_dotenv()
+news_api = os.getenv("NEWS_API_KEY")
+
+
 sdg_titles = [
     "No Poverty", "Zero Hunger", "Good Health and Well-being", 
     "Quality Education", "Gender Equality", "Clean Water and Sanitation", 
@@ -133,6 +139,13 @@ sdg_paragraphs = {
 
 }
 
+
+with open(r'C:\Users\Iben\PROJECTSSS\sdg project\sdgData.json') as f:
+    sdg_data = json.load(f)
+with open(r'C:\Users\Iben\PROJECTSSS\sdg project\text.json') as f:
+    sdg_p = json.load(f)
+
+
 @app.route('/')
 def home():
     return render_template('index.html', sdg_titles=sdg_titles)
@@ -148,13 +161,52 @@ def show_sdg(sdg_number):
                             sdg_title=sdg_title,
                             paragraph=paragraph)
     return "SDG not found", 404
+@app.route('/api/sdg/<sdg_number>')
+def pass_sdg(sdg_number):
 
-@app.route('/api/sdg/<int:sdg_number>')
-def get_sdg_data(sdg_number):
-    if 1 <= sdg_number <= len(sdg_titles):
-        sdg_title = sdg_titles[sdg_number - 1]
-        return jsonify({"sdg_title": sdg_title, "description": sdg_paragraphs.get(sdg_title, "No detailed description available.")})
-    return jsonify({"error": "SDG not found"}), 404
+    if sdg_number in sdg_data:
+        return jsonify(sdg_data[sdg_number])
+    else:
+        return jsonify({'error': 'Not found'}), 404
+
+@app.route('/api/sdg_par/<sdg_number>')
+def pass_par(sdg_number):
+
+    if sdg_number in sdg_data:
+        return jsonify(sdg_p[sdg_number])
+    else:
+        return jsonify({'error': 'Not found'}), 404
+
+@app.route('/news')
+def news_sdg():
+    return render_template('news.html')
+
+@app.route('/api/news')
+def api_news():
+    url = f"https://newsapi.org/v2/everything?q=philippines%20sustainable%20development&language=en&sortBy=publishedAt&apiKey={news_api}"
+    print(url)
+    
+   
+    response = requests.get(url)
+    
+
+    if response.status_code == 200:
+        data = response.json()
+        
+     
+        filtered_articles = []
+        for article in data.get('articles', []):
+            if 'philippines' in article['title'].lower() or \
+               'philippines' in article['description'].lower() or \
+               'philippines' in article['content'].lower():
+                filtered_articles.append(article)
+        
+       
+        articles = filtered_articles[:5]
+        
+        return jsonify(articles)
+    else:
+        return jsonify({'error': 'Failed to retrieve data'}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

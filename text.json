@@ -1,0 +1,66 @@
+{
+  "1": {
+    "Poverty_Rate": "The poverty rate rose from 16.7% in 2019 to 18.1% in 2021, indicating economic challenges likely linked to the COVID-19 pandemic. However, it declined to 15.5% by 2023, showing signs of recovery.",
+    "Population_Below_National_Poverty_Line": "The percentage of the population below the national poverty line decreased from 18.1% in 2021 to 15.5% in 2023, suggesting improvements in income levels and living conditions."
+  },
+  "2": {
+    "Undernourishment": "The prevalence of undernourishment increased steadily from 5.0% in 2019 to 5.9% in 2024, indicating worsening food insecurity and nutritional access.",
+    "Child_Stunting": "Child stunting slightly improved from 28.8% in 2019 to 28.0% in 2023, suggesting limited progress in addressing long-term malnutrition."
+  },
+  "3": {
+    "Maternal_Mortality_Rate": "Maternal mortality decreased from 121 per 100,000 live births in 2019 to 110 in 2024, indicating ongoing improvements in maternal healthcare services.",
+    "Under5_Mortality_Rate": "The under-5 mortality rate declined from 27 in 2019 to 24 in 2024, reflecting enhanced child health interventions and healthcare accessibility."
+  },
+  "4": {
+    "Literacy_Rate_Youth": "Youth literacy rates improved slightly from 98.5% in 2019 to 99.0% in 2023, indicating near-universal literacy among the youth population.",
+    "Net_Enrollment_Rate_Secondary": "Net enrollment in secondary education increased from 73.6% in 2019 to 81.0% in 2023, showing better access to and retention in secondary education."
+  },
+  "5": {
+    "Women_in_Parliament": "The percentage of women in parliament rose marginally from 28.0% in 2019 to 28.5% in 2023, reflecting minimal progress in political gender representation.",
+    "Female_Labor_Force_Participation": "Female labor force participation increased slightly from 46.6% in 2019 to 47.0% in 2023, indicating stable but slow growth in women's economic engagement."
+  },
+  "6": {
+    "Access_to_Safely_Managed_Drinking_Water": "Access to safely managed drinking water improved from 47.0% in 2019 to 53.0% in 2023, indicating positive developments in water infrastructure and services.",
+    "Basic_Sanitation_Services": "Access to basic sanitation services increased gradually from 76.5% in 2019 to 79.0% in 2023, suggesting consistent improvements in hygiene facilities."
+  },
+  "7": {
+    "Access_to_Electricity": "Electricity access improved from 95.6% in 2019 to 96.7% in 2023, showing continued progress toward universal electrification.",
+    "Renewable_Energy_Share": "The share of renewable energy in total energy consumption rose from 26.6% in 2019 to 29.0% in 2023, indicating a transition towards cleaner energy sources."
+  },
+  "8": {
+    "Unemployment_Rate": "The unemployment rate peaked at 10.3% in 2020 due to pandemic-related disruptions, but dropped to 4.3% by 2023, reflecting strong labor market recovery.",
+    "Youth_NEET": "The percentage of youth not in education, employment, or training increased from 18.6% in 2019 to 19.5% in 2023, highlighting ongoing challenges in youth engagement."
+  },
+  "9": {
+    "R_D_Expenditure_GDP": "Research and development expenditure as a percentage of GDP nearly doubled from 0.16% in 2019 to 0.3% in 2023, indicating increased investment in innovation.",
+    "Internet_Users_Percentage": "Internet usage rose from 67.0% in 2019 to 73.0% in 2023, reflecting improved digital infrastructure and connectivity."
+  },
+  "10": {
+    "Gini_Index": "The Gini index decreased from 42.7 in 2019 to 41.0 in 2023, showing a modest improvement in income equality.",
+    "Income_Share_Poorest_40%": "The income share of the poorest 40% increased from 17.2% in 2019 to 18.9% in 2023, indicating a fairer distribution of income."
+  },
+  "11": {
+    "Urban_Population_in_Slums": "The share of the urban population living in slums declined from 38.3% in 2019 to 36.5% in 2023, reflecting modest improvements in urban housing conditions.",
+    "Access_to_Public_Transport": "Access to public transport increased from 54.0% in 2019 to 59.0% in 2023, enhancing mobility and urban accessibility."
+  },
+  "12": {
+    "Municipal_Waste_Collected_%": "The percentage of municipal waste collected increased from 40.0% in 2019 to 50.0% in 2023, indicating progress in waste management systems.",
+    "Plastic_Waste_Leakage_Mt": "Plastic waste leakage reduced from 2.7 Mt in 2019 to 2.5 Mt in 2023, suggesting better control of plastic pollution."
+  },
+  "14": {
+    "Marine_Protected_Areas_%": "Marine protected areas expanded slightly from 1.4% in 2019 to 1.5% in 2023, reflecting limited progress in marine conservation.",
+    "Fish_Stocks_Overexploited_%": "The percentage of overexploited fish stocks increased from 49.0% in 2019 to 52.0% in 2023, indicating growing pressure on marine biodiversity."
+  },
+  "15": {
+    "Forest_Cover_%": "Forest cover increased slightly from 23.9% in 2019 to 24.5% in 2023, suggesting small gains in forest conservation efforts.",
+    "Threatened_Species_Count": "The number of threatened species rose from 684 in 2019 to 702 in 2023, highlighting worsening biodiversity loss."
+  },
+  "16": {
+    "Intentional_Homicide_Rate": "The intentional homicide rate declined from 6.6 per 100,000 people in 2019 to 4.0 in 2023, reflecting improvements in public safety.",
+    "Prison_Population_Rate": "The prison population rate decreased from 134 per 100,000 in 2019 to 130 in 2023, suggesting either reduced crime rates or alternative justice measures."
+  },
+  "17": {
+    "Net_ODA_Received_USD_Millions": "Net Official Development Assistance (ODA) received peaked at USD 1,500 million in 2020 and declined to USD 1,040 million in 2023, indicating reduced external aid post-pandemic.",
+    "Mobile_Subscriptions_Per_100": "Mobile subscriptions per 100 people increased from 113.0 in 2019 to 126.0 in 2023, demonstrating strong growth in mobile connectivity."
+  }
+}
