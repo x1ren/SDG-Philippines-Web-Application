@@ -4,7 +4,7 @@ const sdgs = [
   { number: 3, title: "3. Good Health and Well-being" },
   { number: 4, title: "4. Quality Education" },
   { number: 5, title: "5. Gender Equality" },
-  { number: 6, title: "6. lean Water and Sanitation" },
+  { number: 6, title: "6. Clean Water and Sanitation" },
   { number: 7, title: "7. Affordable and Clean Energy" },
   { number: 8, title: "8.Decent Work and Economic Growth" },
   { number: 9, title: "9.Industry, Innovation and Infrastructure" },
@@ -27,7 +27,7 @@ searchBox.addEventListener("input", () => {
     resultsDiv.innerHTML = "";
     if(keyword == "")return;
 
-    const filtered = sdgs.filter(item => item.title.toLowerCase().includes(keyword));
+    const filtered = sdgs.filter(item => item.title.toLowerCase().includes(keyword)); 
 
     filtered.forEach(item =>{
         const div = document.createElement('div');

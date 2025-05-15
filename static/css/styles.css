@@ -65,7 +65,19 @@
     flex-direction: column;
     padding: 20px 40px;
 }
+.image {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    width: 100%;
+}
 
+.image img {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
 
 .sdgRow {
     display: grid;
@@ -225,6 +237,11 @@
     
     .main {
         padding: 15px 20px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .image img {
+        max-width: 200px; /* Smaller on mobile devices */
     }
 }
 
