@@ -204,10 +204,18 @@ def api_news():
         print("❌ Missing API key")
         return jsonify({'error': 'API key is missing'}), 500
 
-    url = "https://newsapi.org/v2/everything?q=philippines%20sustainable%20development&language=en&sortBy=publishedAt"
+    # Append the apiKey as query parameter
+    url = (
+        "https://newsapi.org/v2/everything"
+        "?q=philippines%20sustainable%20development"
+        "&language=en"
+        "&sortBy=publishedAt"
+        f"&apiKey={news_api}"
+    )
+
     headers = {
-        "X-Api-Key": news_api,
-        "User-Agent": "MyFlaskApp/1.0"
+        "User-Agent": "MyFlaskApp/1.0",
+        "Accept": "application/json"
     }
 
     try:
@@ -244,18 +252,18 @@ def api_news():
         return jsonify({'error': 'Server error occurred', 'message': str(e)}), 500
 
 
-# New test route to check connectivity and API key usage on Render
 @app.route('/api/test-news')
 def test_news():
     print("🔍 [test_news] Endpoint was triggered")
+
     if not news_api:
         print("❌ Missing API key in test")
         return jsonify({'error': 'API key is missing'}), 500
 
-    test_url = "https://newsapi.org/v2/top-headlines?country=ph"
+    test_url = f"https://newsapi.org/v2/top-headlines?country=ph&apiKey={news_api}"
     headers = {
-        "X-Api-Key": news_api,
-        "User-Agent": "MyFlaskApp/1.0"
+        "User-Agent": "MyFlaskApp/1.0",
+        "Accept": "application/json"
     }
 
     try:
@@ -271,7 +279,6 @@ def test_news():
     except Exception as e:
         print("🔥 Exception in test_news:", str(e))
         return jsonify({'error': 'Test server error occurred', 'message': str(e)}), 500
-
 
 
 if __name__ == "__main__":
