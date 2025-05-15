@@ -1,11 +1,12 @@
 from flask import Flask, render_template, jsonify
 import json
 import requests
+from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
 
-
+load_dotenv()
 news_api = os.environ.get('NEWS_API_KEY')
 print("NEWS_API_KEY:", news_api)  
 
@@ -195,24 +196,33 @@ def api_test():
 @app.route('/api/news')
 def api_news():
     print("api_news endpoint was called")
+    
     if not news_api:
         return jsonify({'error': 'API key is missing'}), 500
 
-    url = f"https://newsapi.org/v2/everything?q=philippines%20sustainable%20development&language=en&sortBy=publishedAt&apiKey={news_api}"
+    url = "https://newsapi.org/v2/everything?q=philippines%20sustainable%20development&language=en&sortBy=publishedAt"
+    
+    headers = {
+        "X-Api-Key": news_api
+    }
+
     print("Requesting URL:", url)
     
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
+    
     print("NewsAPI status code:", response.status_code)
     print("NewsAPI response text:", response.text)
-    
+
     if response.status_code == 200:
         data = response.json()
         filtered_articles = []
+
         for article in data.get('articles', []):
             if article['title'] and 'philippines' in article['title'].lower() or \
                article.get('description') and 'philippines' in article['description'].lower() or \
                article.get('content') and 'philippines' in article['content'].lower():
                 filtered_articles.append(article)
+
         articles = filtered_articles[:5]
         return jsonify(articles)
     else:
