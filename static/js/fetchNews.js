@@ -35,7 +35,7 @@ function createNewsCard(article, isFeature = false) {
         window.open(this.getAttribute('data-url'), '_blank', 'noopener noreferrer');
     });
     
-    const thumbnailUrl = article.urlToImage || '/assets/placeholder-news.jpg';
+    const thumbnailUrl = article.image || '/assets/placeholder-news.jpg';
     const formattedDate = formatPublishDate(article.publishedAt);
     
     card.innerHTML = `
