@@ -195,29 +195,25 @@ def api_test():
 @app.route('/api/news')
 def api_news():
     url = f"https://newsapi.org/v2/everything?q=philippines%20sustainable%20development&language=en&sortBy=publishedAt&apiKey={news_api}"
-    print(url)
+    print("Requesting URL:", url)
     
-   
     response = requests.get(url)
+    print("NewsAPI status code:", response.status_code)
+    print("NewsAPI response text:", response.text)
     
-
     if response.status_code == 200:
         data = response.json()
-        
-     
         filtered_articles = []
         for article in data.get('articles', []):
             if 'philippines' in article['title'].lower() or \
                'philippines' in article['description'].lower() or \
                'philippines' in article['content'].lower():
                 filtered_articles.append(article)
-        
-       
         articles = filtered_articles[:5]
-        
         return jsonify(articles)
     else:
         return jsonify({'error': 'Failed to retrieve data'}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)
