@@ -183,6 +183,15 @@ def pass_par(sdg_number):
 def news_sdg():
     return render_template('news.html')
 
+@app.route('/api/test')
+def api_test():
+    test_url = "https://jsonplaceholder.typicode.com/posts/1"
+    try:
+        response = requests.get(test_url)
+        return jsonify(response.json())
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
 @app.route('/api/news')
 def api_news():
     url = f"https://newsapi.org/v2/everything?q=philippines%20sustainable%20development&language=en&sortBy=publishedAt&apiKey={news_api}"
