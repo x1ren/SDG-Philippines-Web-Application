@@ -193,6 +193,15 @@ def api_test():
     except Exception as e:
         return jsonify({"error": str(e)})
 
+from flask import Flask, jsonify
+import os
+import requests
+
+app = Flask(__name__)
+
+# Load your API key from environment
+news_api = os.environ.get('NEWS_API_KEY')
+
 @app.route('/api/news')
 def api_news():
     print("🔍 [api_news] Endpoint was triggered")
@@ -203,7 +212,8 @@ def api_news():
 
     url = "https://newsapi.org/v2/everything?q=philippines%20sustainable%20development&language=en&sortBy=publishedAt"
     headers = {
-        "X-Api-Key": news_api
+        "X-Api-Key": news_api,
+        "User-Agent": "MyFlaskApp/1.0"
     }
 
     try:
@@ -218,9 +228,9 @@ def api_news():
 
             for article in data.get('articles', []):
                 if (
-                    article.get('title') and 'philippines' in article['title'].lower() or
-                    article.get('description') and 'philippines' in article['description'].lower() or
-                    article.get('content') and 'philippines' in article['content'].lower()
+                    (article.get('title') and 'philippines' in article['title'].lower()) or
+                    (article.get('description') and 'philippines' in article['description'].lower()) or
+                    (article.get('content') and 'philippines' in article['content'].lower())
                 ):
                     filtered_articles.append(article)
 
@@ -229,12 +239,44 @@ def api_news():
             return jsonify(articles)
         else:
             print("❌ Error from NewsAPI:", response.status_code, response.text)
-            return jsonify({'error': 'Failed to retrieve data from NewsAPI'}), 500
+            return jsonify({
+                'error': 'Failed to retrieve data from NewsAPI',
+                'status_code': response.status_code,
+                'message': response.text
+            }), 500
 
     except Exception as e:
         print("🔥 Exception occurred:", str(e))
-        return jsonify({'error': 'Server error occurred'}), 500
+        return jsonify({'error': 'Server error occurred', 'message': str(e)}), 500
 
+
+# New test route to check connectivity and API key usage on Render
+@app.route('/api/test-news')
+def test_news():
+    print("🔍 [test_news] Endpoint was triggered")
+    if not news_api:
+        print("❌ Missing API key in test")
+        return jsonify({'error': 'API key is missing'}), 500
+
+    test_url = "https://newsapi.org/v2/top-headlines?country=ph"
+    headers = {
+        "X-Api-Key": news_api,
+        "User-Agent": "MyFlaskApp/1.0"
+    }
+
+    try:
+        response = requests.get(test_url, headers=headers)
+        print(f"✅ Test NewsAPI responded with status {response.status_code}")
+        print("📝 Test NewsAPI raw response:", response.text)
+
+        return jsonify({
+            'status_code': response.status_code,
+            'response': response.json() if response.status_code == 200 else response.text
+        })
+
+    except Exception as e:
+        print("🔥 Exception in test_news:", str(e))
+        return jsonify({'error': 'Test server error occurred', 'message': str(e)}), 500
 
 
 
