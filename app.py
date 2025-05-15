@@ -217,9 +217,11 @@ def api_news():
             filtered_articles = []
 
             for article in data.get('articles', []):
-                if article['title'] and 'philippines' in article['title'].lower() or \
-                   article.get('description') and 'philippines' in article['description'].lower() or \
-                   article.get('content') and 'philippines' in article['content'].lower():
+                if (
+                    article.get('title') and 'philippines' in article['title'].lower() or
+                    article.get('description') and 'philippines' in article['description'].lower() or
+                    article.get('content') and 'philippines' in article['content'].lower()
+                ):
                     filtered_articles.append(article)
 
             articles = filtered_articles[:5]
@@ -232,7 +234,6 @@ def api_news():
     except Exception as e:
         print("🔥 Exception occurred:", str(e))
         return jsonify({'error': 'Server error occurred'}), 500
-
 
 
 
