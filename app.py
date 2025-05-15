@@ -190,7 +190,7 @@ def api_news():
     print("🔍 [api_news] Endpoint triggered")
 
     if not news_api:
-        print("❌ Missing GNews API key")
+       
         return jsonify({'error': 'API key is missing'}), 500
 
     url = (
@@ -216,7 +216,7 @@ def api_news():
             try:
                 data = response.json()
             except ValueError:
-                print("❌ Invalid JSON in GNews response")
+            
                 return jsonify({'error': 'Invalid JSON from GNews'}), 500
 
             filtered_articles = [
@@ -227,7 +227,7 @@ def api_news():
             print(f"✅ Returning {len(filtered_articles[:5])} filtered articles")
             return jsonify(filtered_articles[:5])
         else:
-            print("❌ Error from GNews:", response.status_code, response.text)
+          
             return jsonify({
                 'error': 'Failed to retrieve data from GNews',
                 'status_code': response.status_code,
@@ -239,37 +239,6 @@ def api_news():
         return jsonify({'error': 'Server error', 'message': str(e)}), 500
 
 
-@app.route('/api/test-news')
-def test_news():
-    print("🔍 [test_news] Endpoint triggered")
-
-    if not news_api:
-        print("❌ Missing GNews API key in test")
-        return jsonify({'error': 'API key is missing'}), 500
-
-    test_url = f"https://gnews.io/api/v4/top-headlines?lang=en&country=ph&token={news_api}"
-    headers = {
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "application/json"
-    }
-
-    try:
-        response = requests.get(test_url, headers=headers)
-        print(f"✅ Test response status: {response.status_code}")
-
-        try:
-            data = response.json()
-        except ValueError:
-            data = response.text
-
-        return jsonify({
-            'status_code': response.status_code,
-            'response': data
-        })
-
-    except Exception as e:
-        print("🔥 Exception in test_news:", str(e))
-        return jsonify({'error': 'Test server error', 'message': str(e)}), 500
 
 
 if __name__ == "__main__":
