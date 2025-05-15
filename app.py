@@ -187,7 +187,7 @@ def news_sdg():
 
 @app.route('/api/news')
 def api_news():
-    print("🔍 [api_news] Endpoint triggered")
+   
 
     if not news_api:
        
@@ -208,9 +208,9 @@ def api_news():
     }
 
     try:
-        print("🌐 Sending request to GNews...")
+        
         response = requests.get(url, headers=headers)
-        print(f"✅ Response status: {response.status_code}")
+        
 
         if response.status_code == 200:
             try:
@@ -224,7 +224,7 @@ def api_news():
                 if 'philippines' in (article.get('title', '') + article.get('description', '')).lower()
             ]
 
-            print(f"✅ Returning {len(filtered_articles[:5])} filtered articles")
+           
             return jsonify(filtered_articles[:5])
         else:
           
