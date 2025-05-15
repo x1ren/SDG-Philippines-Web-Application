@@ -193,14 +193,8 @@ def api_test():
     except Exception as e:
         return jsonify({"error": str(e)})
 
-from flask import Flask, jsonify
-import os
-import requests
 
-app = Flask(__name__)
 
-# Load your API key from environment
-news_api = os.environ.get('NEWS_API_KEY')
 
 @app.route('/api/news')
 def api_news():
