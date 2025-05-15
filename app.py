@@ -215,5 +215,6 @@ def api_news():
         return jsonify({'error': 'Failed to retrieve data'}), 500
 
 
+
 if __name__ == "__main__":
     app.run(debug=True)
