@@ -140,11 +140,13 @@ sdg_paragraphs = {
 }
 
 
-with open(r'C:\Users\Iben\PROJECTSSS\sdg project\sdgData.json') as f:
-    sdg_data = json.load(f)
-with open(r'C:\Users\Iben\PROJECTSSS\sdg project\text.json') as f:
-    sdg_p = json.load(f)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+with open(os.path.join(BASE_DIR, 'sdgData.json')) as f:
+    sdg_data = json.load(f)
+
+with open(os.path.join(BASE_DIR, 'text.json')) as f:
+    sdg_p = json.load(f)
 
 @app.route('/')
 def home():
