@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 
 news_api = os.environ.get('NEWS_API_KEY')
+print("NEWS_API_KEY:", news_api)  
 
 
 sdg_titles = [
