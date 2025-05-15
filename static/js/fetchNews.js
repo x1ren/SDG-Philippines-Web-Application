@@ -11,13 +11,13 @@ async function fetchNews() {
 
 function renderNews(articles) {
     const newsContainer = document.querySelector('.news-container');
-    newsContainer.innerHTML = ''; // Clear existing content
+    newsContainer.innerHTML = ''; 
     
-    // Create news grid
+
     const newsGrid = document.createElement('div');
     newsGrid.className = 'news-grid';
     
-    // Add the first 5 articles
+  
     for (let i = 0; i < 5 && i < articles.length; i++) {
         const article = articles[i];
         const card = createNewsCard(article, i === 0);
@@ -59,23 +59,23 @@ function createNewsCard(article, isFeature = false) {
 function formatPublishDate(dateString) {
     const date = new Date(dateString);
     
-    // If invalid date, return empty string
+  
     if (isNaN(date)) return '';
     
-    // Check if it's today
+
     const today = new Date();
     if (date.toDateString() === today.toDateString()) {
         return `Today, ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     }
     
-    // Check if it's yesterday
+ 
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     if (date.toDateString() === yesterday.toDateString()) {
         return `Yesterday, ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     }
     
-    // For older dates
+
     return date.toLocaleDateString([], { 
         month: 'short', 
         day: 'numeric',
@@ -98,7 +98,7 @@ function showErrorMessage() {
     `;
 }
 
-// Add CSS styles
+
 function addStyles() {
     const styleElement = document.createElement('style');
     styleElement.textContent = `
