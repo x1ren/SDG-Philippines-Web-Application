@@ -184,27 +184,16 @@ def pass_par(sdg_number):
 def news_sdg():
     return render_template('news.html')
 
-@app.route('/api/test')
-def api_test():
-    test_url = "https://jsonplaceholder.typicode.com/posts/1"
-    try:
-        response = requests.get(test_url)
-        return jsonify(response.json())
-    except Exception as e:
-        return jsonify({"error": str(e)})
-
-
 
 
 @app.route('/api/news')
 def api_news():
-    print("🔍 [api_news] Endpoint was triggered")
+    print("🔍 [api_news] Endpoint triggered")
 
     if not news_api:
-        print("❌ Missing API key")
+        print("❌ Missing NewsAPI key")
         return jsonify({'error': 'API key is missing'}), 500
 
-    # Append the apiKey as query parameter
     url = (
         "https://newsapi.org/v2/everything"
         "?q=philippines%20sustainable%20development"
@@ -214,31 +203,32 @@ def api_news():
     )
 
     headers = {
-        "User-Agent": "MyFlaskApp/1.0",
+        "User-Agent": "Mozilla/5.0",
         "Accept": "application/json"
     }
 
     try:
-        print("🌐 [api_news] Sending request to NewsAPI...")
+        print("🌐 Sending request to NewsAPI...")
         response = requests.get(url, headers=headers)
-        print(f"✅ NewsAPI responded with status {response.status_code}")
-        print("📝 NewsAPI raw response:", response.text)
+        print(f"✅ Response status: {response.status_code}")
 
         if response.status_code == 200:
-            data = response.json()
-            filtered_articles = []
+            try:
+                data = response.json()
+            except ValueError:
+                print("❌ Invalid JSON in response")
+                return jsonify({'error': 'Invalid JSON from NewsAPI'}), 500
 
-            for article in data.get('articles', []):
-                if (
-                    (article.get('title') and 'philippines' in article['title'].lower()) or
-                    (article.get('description') and 'philippines' in article['description'].lower()) or
-                    (article.get('content') and 'philippines' in article['content'].lower())
-                ):
-                    filtered_articles.append(article)
+            filtered_articles = [
+                article for article in data.get('articles', [])
+                if any(
+                    'philippines' in (article.get(field) or '').lower()
+                    for field in ['title', 'description', 'content']
+                )
+            ]
 
-            articles = filtered_articles[:5]
-            print(f"✅ Returning {len(articles)} filtered articles")
-            return jsonify(articles)
+            print(f"✅ Returning {len(filtered_articles[:5])} filtered articles")
+            return jsonify(filtered_articles[:5])
         else:
             print("❌ Error from NewsAPI:", response.status_code, response.text)
             return jsonify({
@@ -249,36 +239,41 @@ def api_news():
 
     except Exception as e:
         print("🔥 Exception occurred:", str(e))
-        return jsonify({'error': 'Server error occurred', 'message': str(e)}), 500
+        return jsonify({'error': 'Server error', 'message': str(e)}), 500
 
 
 @app.route('/api/test-news')
 def test_news():
-    print("🔍 [test_news] Endpoint was triggered")
+    print("🔍 [test_news] Endpoint triggered")
 
     if not news_api:
-        print("❌ Missing API key in test")
+        print("❌ Missing NewsAPI key in test")
         return jsonify({'error': 'API key is missing'}), 500
 
     test_url = f"https://newsapi.org/v2/top-headlines?country=ph&apiKey={news_api}"
     headers = {
-        "User-Agent": "MyFlaskApp/1.0",
+        "User-Agent": "Mozilla/5.0",
         "Accept": "application/json"
     }
 
     try:
         response = requests.get(test_url, headers=headers)
-        print(f"✅ Test NewsAPI responded with status {response.status_code}")
-        print("📝 Test NewsAPI raw response:", response.text)
+        print(f"✅ Test response status: {response.status_code}")
+
+        try:
+            data = response.json()
+        except ValueError:
+            data = response.text
 
         return jsonify({
             'status_code': response.status_code,
-            'response': response.json() if response.status_code == 200 else response.text
+            'response': data
         })
 
     except Exception as e:
         print("🔥 Exception in test_news:", str(e))
-        return jsonify({'error': 'Test server error occurred', 'message': str(e)}), 500
+        return jsonify({'error': 'Test server error', 'message': str(e)}), 500
+
 
 
 if __name__ == "__main__":
