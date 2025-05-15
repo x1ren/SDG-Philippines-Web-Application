@@ -195,38 +195,44 @@ def api_test():
 
 @app.route('/api/news')
 def api_news():
-    print("api_news endpoint was called")
-    
+    print("🔍 [api_news] Endpoint was triggered")
+
     if not news_api:
+        print("❌ Missing API key")
         return jsonify({'error': 'API key is missing'}), 500
 
     url = "https://newsapi.org/v2/everything?q=philippines%20sustainable%20development&language=en&sortBy=publishedAt"
-    
     headers = {
         "X-Api-Key": news_api
     }
 
-    print("Requesting URL:", url)
-    
-    response = requests.get(url, headers=headers)
-    
-    print("NewsAPI status code:", response.status_code)
-    print("NewsAPI response text:", response.text)
+    try:
+        print("🌐 [api_news] Sending request to NewsAPI...")
+        response = requests.get(url, headers=headers)
+        print(f"✅ NewsAPI responded with status {response.status_code}")
+        print("📝 NewsAPI raw response:", response.text)
 
-    if response.status_code == 200:
-        data = response.json()
-        filtered_articles = []
+        if response.status_code == 200:
+            data = response.json()
+            filtered_articles = []
 
-        for article in data.get('articles', []):
-            if article['title'] and 'philippines' in article['title'].lower() or \
-               article.get('description') and 'philippines' in article['description'].lower() or \
-               article.get('content') and 'philippines' in article['content'].lower():
-                filtered_articles.append(article)
+            for article in data.get('articles', []):
+                if article['title'] and 'philippines' in article['title'].lower() or \
+                   article.get('description') and 'philippines' in article['description'].lower() or \
+                   article.get('content') and 'philippines' in article['content'].lower():
+                    filtered_articles.append(article)
 
-        articles = filtered_articles[:5]
-        return jsonify(articles)
-    else:
-        return jsonify({'error': 'Failed to retrieve data'}), 500
+            articles = filtered_articles[:5]
+            print(f"✅ Returning {len(articles)} filtered articles")
+            return jsonify(articles)
+        else:
+            print("❌ Error from NewsAPI:", response.status_code, response.text)
+            return jsonify({'error': 'Failed to retrieve data from NewsAPI'}), 500
+
+    except Exception as e:
+        print("🔥 Exception occurred:", str(e))
+        return jsonify({'error': 'Server error occurred'}), 500
+
 
 
 
