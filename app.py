@@ -185,21 +185,21 @@ def news_sdg():
     return render_template('news.html')
 
 
-
 @app.route('/api/news')
 def api_news():
     print("🔍 [api_news] Endpoint triggered")
 
     if not news_api:
-        print("❌ Missing NewsAPI key")
+        print("❌ Missing GNews API key")
         return jsonify({'error': 'API key is missing'}), 500
 
     url = (
-        "https://newsapi.org/v2/everything"
-        "?q=philippines%20sustainable%20development"
-        "&language=en"
-        "&sortBy=publishedAt"
-        f"&apiKey={news_api}"
+        "https://gnews.io/api/v4/search"
+        "?q=philippines+sustainable+development"
+        "&lang=en"
+        "&country=ph"
+        "&max=10"
+        f"&token={news_api}"
     )
 
     headers = {
@@ -208,7 +208,7 @@ def api_news():
     }
 
     try:
-        print("🌐 Sending request to NewsAPI...")
+        print("🌐 Sending request to GNews...")
         response = requests.get(url, headers=headers)
         print(f"✅ Response status: {response.status_code}")
 
@@ -216,23 +216,20 @@ def api_news():
             try:
                 data = response.json()
             except ValueError:
-                print("❌ Invalid JSON in response")
-                return jsonify({'error': 'Invalid JSON from NewsAPI'}), 500
+                print("❌ Invalid JSON in GNews response")
+                return jsonify({'error': 'Invalid JSON from GNews'}), 500
 
             filtered_articles = [
                 article for article in data.get('articles', [])
-                if any(
-                    'philippines' in (article.get(field) or '').lower()
-                    for field in ['title', 'description', 'content']
-                )
+                if 'philippines' in (article.get('title', '') + article.get('description', '')).lower()
             ]
 
             print(f"✅ Returning {len(filtered_articles[:5])} filtered articles")
             return jsonify(filtered_articles[:5])
         else:
-            print("❌ Error from NewsAPI:", response.status_code, response.text)
+            print("❌ Error from GNews:", response.status_code, response.text)
             return jsonify({
-                'error': 'Failed to retrieve data from NewsAPI',
+                'error': 'Failed to retrieve data from GNews',
                 'status_code': response.status_code,
                 'message': response.text
             }), 500
@@ -247,10 +244,10 @@ def test_news():
     print("🔍 [test_news] Endpoint triggered")
 
     if not news_api:
-        print("❌ Missing NewsAPI key in test")
+        print("❌ Missing GNews API key in test")
         return jsonify({'error': 'API key is missing'}), 500
 
-    test_url = f"https://newsapi.org/v2/top-headlines?country=ph&apiKey={news_api}"
+    test_url = f"https://gnews.io/api/v4/top-headlines?lang=en&country=ph&token={news_api}"
     headers = {
         "User-Agent": "Mozilla/5.0",
         "Accept": "application/json"
@@ -273,7 +270,6 @@ def test_news():
     except Exception as e:
         print("🔥 Exception in test_news:", str(e))
         return jsonify({'error': 'Test server error', 'message': str(e)}), 500
-
 
 
 if __name__ == "__main__":
