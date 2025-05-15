@@ -194,6 +194,7 @@ def api_test():
 
 @app.route('/api/news')
 def api_news():
+    print("api_news endpoint was called")
     if not news_api:
         return jsonify({'error': 'API key is missing'}), 500
 
