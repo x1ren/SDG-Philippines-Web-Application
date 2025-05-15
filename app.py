@@ -1,13 +1,12 @@
 from flask import Flask, render_template, jsonify
 import json
 import requests
-from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
 
-load_dotenv()
-news_api = os.getenv("NEWS_API_KEY")
+
+news_api = os.environ.get('NEWS_API_KEY')
 
 
 sdg_titles = [
